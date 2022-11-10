@@ -1,0 +1,390 @@
+openapi: 3.0.0
+info:
+  title: 'Laradogs OpenAPI Documentation'
+  description: 'Laravellel készült első projektjeim egyike.'
+  contact:
+    email: csertanb@gmail.com
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://laradogs.test/api/v1'
+    description: 'Localhost API Server'
+paths:
+  /breeds:
+    get:
+      tags:
+        - Breed
+      summary: 'Get list of breeds'
+      description: 'Returns list of breeds'
+      operationId: getBreeds
+      parameters:
+        -
+          name: page
+          in: path
+          description: 'Page to show'
+          required: false
+          schema:
+            type: integer
+        -
+          name: itemNumber
+          in: path
+          description: 'How many items/page. Default value: 10'
+          required: false
+          schema:
+            type: integer
+        -
+          name: includeDogs
+          in: path
+          description: 'Should include dogs or not. Default value: false'
+          required: false
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreedResource'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+    post:
+      tags:
+        - Breed
+      summary: 'Store new breed'
+      description: 'Returns project data'
+      operationId: storeBreed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreBreedRequest'
+      responses:
+        201:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Breed'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+  '/breeds/{id}':
+    get:
+      tags:
+        - Breed
+      summary: 'Get breed information'
+      description: 'Returns breed data'
+      operationId: getBreedByID
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Breed id'
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Breed'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+    put:
+      tags:
+        - Breed
+      summary: 'Update existing breed'
+      description: 'Returns updated breed data'
+      operationId: updateBreed
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Breed id'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBreedRequest'
+      responses:
+        202:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Breed'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        404:
+          description: 'Resource Not Found'
+    delete:
+      tags:
+        - Breed
+      summary: 'Delete existing breed'
+      description: 'Deletes a breed and returns no content'
+      operationId: deleteBreed
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Breed id'
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'Successful operation'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        404:
+          description: 'Resource Not Found'
+  /dogs:
+    get:
+      tags:
+        - Dog
+      summary: 'Get list of dogs'
+      description: 'Returns list of dogs'
+      operationId: getDogs
+      parameters:
+        -
+          name: page
+          in: path
+          description: 'Page to show'
+          required: false
+          schema:
+            type: integer
+        -
+          name: itemNumber
+          in: path
+          description: 'How many items/page. Default value: 10'
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DogResource'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+    post:
+      tags:
+        - Dog
+      summary: 'Store new dog'
+      description: 'Returns dog data'
+      operationId: storeDog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreDogRequest'
+      responses:
+        201:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dog'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+  '/dogs/{id}':
+    get:
+      tags:
+        - Dog
+      summary: 'Get dog information by ID'
+      description: 'Returns dog data'
+      operationId: getDogByID
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Dog id'
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dog'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+    put:
+      tags:
+        - Dog
+      summary: 'Update existing dog'
+      description: 'Returns updated dog data'
+      operationId: updateDog
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Dog id'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDogRequest'
+      responses:
+        202:
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dog'
+        400:
+          description: 'Bad Request'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        404:
+          description: 'Resource Not Found'
+    delete:
+      tags:
+        - Dog
+      summary: 'Delete existing dog'
+      description: 'Deletes a dog and returns no content'
+      operationId: deleteDog
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Dog id'
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'Successful operation'
+        401:
+          description: Unauthenticated
+        403:
+          description: Forbidden
+        404:
+          description: 'Resource Not Found'
+components:
+  schemas:
+    StoreBreedRequest:
+      title: StoreBreedRequest
+      description: 'StoreBreedRequest model'
+      properties:
+        '':
+          title: 'Updated at'
+          description: 'Updated at'
+          type: string
+          format: datetime
+          example: '2020-01-27 17:50:45'
+      type: object
+      xml:
+        name: StoreBreedRequest
+    StoreDogRequest:
+      title: StoreDogRequest
+      description: 'StoreDogRequest model'
+      xml:
+        name: StoreDogRequest
+    UpdateBreedRequest:
+      title: UpdateBreedRequest
+      description: 'UpdateBreedRequest model'
+      properties:
+        '':
+          title: 'Updated at'
+          description: 'Updated at'
+          type: string
+          format: datetime
+          example: '2020-01-27 17:50:45'
+      type: object
+      xml:
+        name: UpdateBreedRequest
+    UpdateDogRequest:
+      title: UpdateDogRequest
+      description: 'UpdateDogRequest model'
+      xml:
+        name: UpdateDogRequest
+    BreedCollection:
+      title: BreedCollection
+      description: 'BreedCollection model'
+      xml:
+        name: BreedCollection
+    BreedResource:
+      title: BreedResource
+      description: 'BreedResource model'
+      xml:
+        name: BreedResource
+    DogCollection:
+      title: DogCollection
+      description: 'DogCollection model'
+      xml:
+        name: DogCollection
+    DogResource:
+      title: DogResource
+      description: 'DogResource model'
+      xml:
+        name: DogResource
+    Breed:
+      title: Breed
+      description: 'Breed model'
+      properties:
+        fillable:
+          title: Dog
+          description: 'Dogs belongs to this breed'
+          type: array
+          items:
+            $ref: '#/components/schemas/Dog'
+      type: object
+      xml:
+        name: Breed
+    Dog:
+      title: Dog
+      description: 'Dog model'
+      xml:
+        name: Dog
+tags:
+  -
+    name: Controllers
+    description: 'API Endpoints of Contollers'

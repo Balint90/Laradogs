@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('breeds', function (Blueprint $table) {
+            $table->id();
+            $table->string('breed_name');
+            $table->string('breed_group_name'); // Sport, Vadász, Munka, Terrier, Játék, Nem-Sport, Pásztor
+            $table->string('lifespan');
+            $table->string('temperament');
+            $table->string('weight_interval');
+            $table->string('height_interval');
+            $table->string('picture')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('breeds');
+    }
+};
